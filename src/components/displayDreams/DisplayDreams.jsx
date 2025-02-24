@@ -5,7 +5,6 @@ import Loading from "../Loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
-  faRemove,
   faSave,
   faTimes,
   faTrash,
@@ -42,8 +41,8 @@ function DisplayDreams({ userDetails }) {
         <div className={styles.dreamsContainer}>
           {dreams.map((data, index) => (
             <DreamsContainer
-            loading={loading}
-            setLoading={setLoading}
+              loading={loading}
+              setLoading={setLoading}
               dreams={dreams}
               setDreams={setDreams}
               key={index}
@@ -59,7 +58,14 @@ function DisplayDreams({ userDetails }) {
   );
 }
 
-const DreamsContainer = ({ data, email, dreams, setDreams,loading,setLoading }) => {
+const DreamsContainer = ({
+  data,
+  email,
+  dreams,
+  setDreams,
+  loading,
+  setLoading,
+}) => {
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(data.dreamTitle);
   const [category, setCategory] = useState(data.dreamEmotion);
@@ -95,10 +101,12 @@ const DreamsContainer = ({ data, email, dreams, setDreams,loading,setLoading }) 
       category: category,
       description: description,
     };
+    console.log(title, category);
+    console.log(description);
 
     try {
       const response = await fetch(
-        `http://localhost:8000/userDreamsDB/editUserDream`,
+        `https://dream-journal-backend.vercel.app/userDreamsDB/editUserDream`,
         {
           method: "PUT",
           headers: {
@@ -118,22 +126,35 @@ const DreamsContainer = ({ data, email, dreams, setDreams,loading,setLoading }) 
         throw new Error("Failed to update dream data");
       }
 
+      // Directly update the state with the new dream data
+    setDreams((prevDreams) =>
+      prevDreams.map((dream) =>
+        dream._id === data._id
+          ? { ...dream, dreamTitle: title, dreamEmotion: category, dreamDesc: description }
+          : dream
+      )
+    );
+
       console.log("Dream updated successfully:", result);
     } catch (error) {
       console.error("Error updating dream:", error);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      console.log(title, category);
+      console.log(description);
+      setTitle(title);
+      setCategory(category);
+      setDescription(description);
+      setLoading(false);
     }
   };
 
   // delete userDream
 
   const handleDeleteDream = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:8000/userDreamsDB/deleteUserDream",
+        "https://dream-journal-backend.vercel.app/userDreamsDB/deleteUserDream",
         {
           method: "DELETE",
           headers: {
@@ -156,9 +177,8 @@ const DreamsContainer = ({ data, email, dreams, setDreams,loading,setLoading }) 
       );
     } catch (error) {
       console.error("Error deleting dream:", error);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 

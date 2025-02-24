@@ -1,7 +1,7 @@
 export const fetchDreams = async (email) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/userDreamsDB/getUserDreams?userEmail=${encodeURIComponent(email)}`
+        `https://dream-journal-backend.vercel.app/userDreamsDB/getUserDreams?userEmail=${encodeURIComponent(email)}`
       );
 
       const data = await response.json();

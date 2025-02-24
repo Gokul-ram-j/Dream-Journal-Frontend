@@ -1,7 +1,7 @@
 export const fetchAllDreams = async () => {
     console.log("fetchAllDreams called!"); // Debug log
     try {
-        const response = await fetch('http://localhost:8000/userDreamsDB/getAllUserDreams');
+        const response = await fetch('https://dream-journal-backend.vercel.app/userDreamsDB/getAllUserDreams');
         
         console.log("Response received:", response);
         

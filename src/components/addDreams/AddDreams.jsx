@@ -23,7 +23,7 @@ function AddDreams({ userDetails }) {
     // Convert formData to a JSON string and encode it
     const dreamDataString = encodeURIComponent(JSON.stringify(formData));
 
-    const url = `http://localhost:8000/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
+    const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
 
     try {
       setLoading(true);
@@ -43,17 +43,23 @@ function AddDreams({ userDetails }) {
   // localhost:8000/userDreamsDB/addUserDream?userEmail=ram@gmail.com&dreamData={title:'sample',desc:'sample desc',category:'sample category'}
   return (
     <div className={styles.container}>
-      <div style={{minHeight:'80px',maxHeight:'fit-content',width:'100%',height:'fit-content'}}>
-
-      <h1 className={styles.header}>
-        <Typewriter
-          loop
-          words={[
-            "Save Your Dreams Here",
-            "Unveil the Hidden Meanings of Your Nightly Adventures",
-          ]}
-        />
-      </h1>
+      <div
+        style={{
+          minHeight: "80px",
+          maxHeight: "fit-content",
+          width: "100%",
+          height: "fit-content",
+        }}
+      >
+        <h1 className={styles.header}>
+          <Typewriter
+            loop
+            words={[
+              "Save Your Dreams Here",
+              "Unveil the Hidden Meanings of Your Nightly Adventures",
+            ]}
+          />
+        </h1>
       </div>
       <form onSubmit={handleSubmit} className={styles.dreamForm}>
         <input
