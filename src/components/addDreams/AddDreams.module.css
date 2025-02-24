@@ -1,0 +1,92 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    background: rgb(0, 0, 0,0.436);
+    background-image: url('../../assets/night.jpg');
+    background-size: contain;
+    background-repeat: repeat;
+    background-position: center;
+
+}
+
+.header {
+    text-align: center;
+    font-size: clamp(1.5rem, 2rem, 3rem); 
+    color: white;
+    backdrop-filter: blur(3px);
+    margin: auto;
+    width: fit-content;
+}
+
+
+.dreamForm{
+    max-width: 50vw;
+    height: 300px;
+    min-width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 2px 2px 4px  rgba(0, 0, 0, 0.355),-2px -2px 4px  rgba(0, 0, 0, 0.355);
+    padding: 30px;
+    backdrop-filter: blur(3px);
+}
+
+.formInput{
+    padding: 15px;
+    font-size: 20px;
+    box-sizing: border-box;
+    resize: vertical;
+    background: transparent;
+    border: 0px;
+    border-bottom: 2px solid white;
+    scrollbar-width: none;
+    color:white;
+}
+
+.formInput::placeholder{
+    color: white;
+}
+
+formInput:focus{
+    outline: none;
+}
+
+select.formInput{
+    
+    border: 1px solid white;
+}
+
+select.formInput>option{
+    color: black;
+}
+select.formInput:focus{
+outline: none;
+}
+.AddBtn{
+    padding: 5px;
+    border: 0px;
+    font-size: 20px;
+    color: white;
+    border: 2px solid white;
+    background: transparent;
+    font-weight: bold;
+}
+
+.AddBtn:hover{
+    background-color: rgba(255, 255, 255, 0.153);
+    border: 2px solid white;
+    color: white;
+    font-weight: bold;
+
+}

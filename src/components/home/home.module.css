@@ -1,0 +1,21 @@
+.header{
+    text-align: center;
+    margin: 10px auto;
+    font-weight: bold;
+}
+
+.graphContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-sizing: content-box;
+    width: 100vw;
+}
+
+
+/* mobile view */
+@media (max-width: 768px) { 
+    .graphContainer {
+        grid-template-columns: 100%;
+        box-sizing: border-box;
+    }
+}

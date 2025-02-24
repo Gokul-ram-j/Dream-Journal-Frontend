@@ -1,0 +1,93 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('../../assets/LoginBg.jpg');
+    background-repeat: no-repeat;
+    background-position:  center;
+    background-size: cover;
+}
+
+.title{
+    font-size: 30px;
+    text-align: center;
+}
+
+.form{
+    padding: 50px;
+    min-width: 300px;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 15px;
+    max-width: 40vw;
+}
+.formTitle{
+    text-align: center;
+    margin: 10px auto;
+}
+.errorMsg{
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+.inpWrapper{
+    display: flex;
+    gap:2px;
+    width: 100%;
+    margin: 10px auto;
+    border: .5px solid black;
+    padding: 0px 15px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.formInput{
+    width: 100%;
+    height: 50px;
+    border: 0px;
+    font-size: 25px;
+    margin-left: 5px;
+    background: transparent;
+}
+.formInput:focus{
+    outline: 0px;
+}
+
+.submitBtn{
+    width: 100%;
+    margin: auto;
+    padding: 5px;
+    font-size: 22px;
+    border: 0px;
+    border-radius: 5px;
+    color: rgba(234, 111, 132, 0.718);
+    background: transparent;
+    border: 2px solid rgba(234, 111, 132, 0.718);
+    border-radius: 10px;
+}
+
+.submitBtn:hover{
+    background-color: rgba(234, 111, 132, 0.718);
+    color: white;
+    
+}
+
+.msg{
+    text-align: center;
+    font-size: 20px;
+    margin: 10px auto;
+}
+.navLink{
+    color: rgba(234, 111, 132, 0.718);
+    cursor:grab;
+    font-weight: bold;
+}

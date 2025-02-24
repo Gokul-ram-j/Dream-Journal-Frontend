@@ -1,0 +1,157 @@
+.displayDreamTitle {
+    text-align: center;
+    margin: 5px;
+}
+
+.dreamsContainer {
+    width: 100vw;
+    min-height: 90vh;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.dreamDataContainer {
+    position: relative;
+    margin: 20px auto;
+    min-width: 350px;
+    max-width: 50vw;
+    padding: 10px;
+    box-shadow: 1px 1px 3px 1px  rgba(0, 0, 0, 0.596);
+}
+
+/* Title, Category, and Description */
+.dreamTitle,
+.dreamCategory,
+.dreamDesc {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+input.dreamTitle,
+select.dreamCategory,
+textarea.dreamDesc {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    width: 98%;
+    font-size: 1rem;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+.dreamTitle{
+    font-size: 1.5rem;
+}
+/* Chrome, Safari, Edge */
+textarea.dreamDesc::-webkit-scrollbar {
+    display: none; 
+}
+
+select.dreamCategory {
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Category Styling */
+.dreamCategory {
+    border: 1px solid black;
+    font-weight: bold;
+    width: fit-content;
+    margin: 5px 0px;
+    padding: 5px;
+    color: white;
+    background: black;
+    border-radius: 20px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.NoDreamData {
+    min-width: 300px;
+    min-height: 300px;
+    width: 40vw;
+    height: 40vw;
+    margin: auto;
+    background-image: url('../../assets/noData.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Button Styles - Scoped */
+.buttonContainer {
+    display: flex;
+    gap: 8px;
+    padding: 5px;
+    position: relative;
+}
+
+.editButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+.saveButton {
+    background-color: #2196f3;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+.cancelButton {
+    background-color: #f44336;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+.deleteButton {
+    background-color: #f44336; 
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+.editButton:hover,
+.saveButton:hover,
+.cancelButton:hover,
+.deleteButton {
+    opacity: 0.8;
+}
+
+
+.dreamDataContainer option, .dreamDataContainer select{
+    color: black;
+}
+
+.dateOfPostContainer{
+    position: absolute;
+    right: 10px;
+    font-size: clamp(14px,1rem,18px);
+    color: rgba(0, 0, 0, 0.478);
+    margin-top: 2.5px;
+}
