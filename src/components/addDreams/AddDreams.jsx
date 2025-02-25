@@ -6,6 +6,7 @@ function AddDreams({ userDetails }) {
     dreamTitle: "",
     dreamDesc: "",
     dreamEmotion: "",
+    dreamDate: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,6 @@ function AddDreams({ userDetails }) {
     const dreamDataString = encodeURIComponent(JSON.stringify(formData));
 
     const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
-
     try {
       setLoading(true);
       await fetch(url, {
@@ -33,10 +33,14 @@ function AddDreams({ userDetails }) {
           "Content-Type": "application/json",
         },
       })
-        .then(() => setLoading(false), 5000)
+        .then((res) => {
+          console.log(res);
+        })
         .catch((err) => console.log(err));
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +55,7 @@ function AddDreams({ userDetails }) {
           height: "fit-content",
         }}
       >
-        <h1 className={styles.header}>
+        <h3 className={styles.header}>
           <Typewriter
             loop
             words={[
@@ -59,7 +63,7 @@ function AddDreams({ userDetails }) {
               "Unveil the Hidden Meanings of Your Nightly Adventures",
             ]}
           />
-        </h1>
+        </h3>
       </div>
       <form onSubmit={handleSubmit} className={styles.dreamForm}>
         <input
@@ -80,29 +84,32 @@ function AddDreams({ userDetails }) {
           required
           value={formData.dreamDesc}
         />
-
-        {/* Emotion Dropdown */}
+        <input
+          name="dreamDate"
+          value={formData.dreamDate}
+          required
+          onChange={handleChange}
+          className={styles.formInput}
+          type="date"
+        />
         <select
           className={styles.formInput}
           name="dreamEmotion"
           onChange={handleChange}
         >
           <option value="">Select Emotion</option>
-          {/* Positive Emotions */}
           <option value="joy">Joy / Happiness</option>
           <option value="love">Love / Affection</option>
           <option value="relief">Relief</option>
           <option value="curiosity">Curiosity / Wonder</option>
           <option value="empowerment">Empowerment / Confidence</option>
 
-          {/* Negative Emotions */}
           <option value="fear">Fear / Anxiety</option>
           <option value="sadness">Sadness / Grief</option>
           <option value="anger">Anger / Frustration</option>
           <option value="shame">Shame / Embarrassment</option>
           <option value="helplessness">Helplessness / Powerlessness</option>
 
-          {/* Mixed Emotions */}
           <option value="nostalgia">Nostalgia</option>
           <option value="confusion">Confusion / Disorientation</option>
           <option value="surprise">Surprise / Shock</option>

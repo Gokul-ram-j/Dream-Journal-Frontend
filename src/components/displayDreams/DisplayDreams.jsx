@@ -127,13 +127,18 @@ const DreamsContainer = ({
       }
 
       // Directly update the state with the new dream data
-    setDreams((prevDreams) =>
-      prevDreams.map((dream) =>
-        dream._id === data._id
-          ? { ...dream, dreamTitle: title, dreamEmotion: category, dreamDesc: description }
-          : dream
-      )
-    );
+      setDreams((prevDreams) =>
+        prevDreams.map((dream) =>
+          dream._id === data._id
+            ? {
+                ...dream,
+                dreamTitle: title,
+                dreamEmotion: category,
+                dreamDesc: description,
+              }
+            : dream
+        )
+      );
 
       console.log("Dream updated successfully:", result);
     } catch (error) {
@@ -259,8 +264,8 @@ const DreamsContainer = ({
             </button>
           </>
         )}
-        <p className={styles.dateOfPostContainer}>{formattedDate}</p>
       </div>
+      <p className={styles.dateOfPostContainer}>{formattedDate}</p>
     </div>
   );
 };

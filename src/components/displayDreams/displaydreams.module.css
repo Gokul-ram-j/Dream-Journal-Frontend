@@ -11,12 +11,13 @@
 }
 
 .dreamDataContainer {
-    position: relative;
     margin: 20px auto;
-    min-width: 350px;
-    max-width: 50vw;
+    min-width:250px;
+    max-width: 650px;
     padding: 10px;
     box-shadow: 1px 1px 3px 1px  rgba(0, 0, 0, 0.596);
+    box-sizing: border-box;
+    
 }
 
 /* Title, Category, and Description */
@@ -41,8 +42,8 @@ textarea.dreamDesc {
     overflow: scroll;
     scrollbar-width: none;
 }
-.dreamTitle{
-    font-size: 1.5rem;
+.dreamTitle, .dreamCategory{
+    font-size: clamp(14px,1rem,1.5rem);
 }
 /* Chrome, Safari, Edge */
 textarea.dreamDesc::-webkit-scrollbar {
@@ -95,7 +96,6 @@ select.dreamCategory {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease-in-out;
 }
@@ -107,7 +107,6 @@ select.dreamCategory {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease-in-out;
 }
@@ -119,7 +118,6 @@ select.dreamCategory {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease-in-out;
 }
@@ -131,7 +129,6 @@ select.dreamCategory {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease-in-out;
 }
@@ -149,9 +146,7 @@ select.dreamCategory {
 }
 
 .dateOfPostContainer{
-    position: absolute;
-    right: 10px;
-    font-size: clamp(14px,1rem,18px);
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.478);
     margin-top: 2.5px;
 }

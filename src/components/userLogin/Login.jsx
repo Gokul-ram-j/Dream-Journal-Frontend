@@ -76,7 +76,7 @@ function Login() {
       {loading && <Loading />}
       {!loading && (
         <div className={styles.container}>
-          <h1 className={styles.title}>Welcome to Dream Journal</h1>
+          <h1 className={styles.title}>Welcome <br /> to <br /> Dream Journal</h1>
           <form className={styles.form} onSubmit={handleSubmit}>
             <h1 className={styles.formTitle}>
               {isLogin ? "Login" : "Sign in"}
@@ -88,7 +88,7 @@ function Login() {
             )}
             {!isLogin &&<div className={styles.inpWrapper}>
               <FontAwesomeIcon
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "16px", height: "16px" }}
                 icon={faUser}
               />
               <input
@@ -102,7 +102,7 @@ function Login() {
             </div>}
             <div className={styles.inpWrapper}>
               <FontAwesomeIcon
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "16px", height: "16px" }}
                 icon={faEnvelope}
               />
               <input
@@ -116,7 +116,7 @@ function Login() {
             </div>
             <div className={styles.inpWrapper}>
               <FontAwesomeIcon
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "16px", height: "16px" }}
                 icon={faLock}
               />
               <input

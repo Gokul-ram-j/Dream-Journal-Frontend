@@ -6,45 +6,41 @@
 .container{
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     gap: 15px;
     background: rgb(0, 0, 0,0.436);
     background-image: url('../../assets/night.jpg');
     background-size: contain;
     background-repeat: repeat;
     background-position: center;
-
+    padding-top: 25px ;
 }
 
 .header {
     text-align: center;
-    font-size: clamp(1.5rem, 2rem, 3rem); 
     color: white;
     backdrop-filter: blur(3px);
     margin: auto;
     width: fit-content;
+    
 }
 
 
 .dreamForm{
-    max-width: 50vw;
     height: 300px;
-    min-width: 300px;
+    width: 80vw;
+    max-width: 500px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     box-shadow: 2px 2px 4px  rgba(0, 0, 0, 0.355),-2px -2px 4px  rgba(0, 0, 0, 0.355);
-    padding: 30px;
+    padding: 15px;
     backdrop-filter: blur(3px);
+    margin: auto;
 }
 
 .formInput{
     padding: 15px;
-    font-size: 20px;
     box-sizing: border-box;
     resize: vertical;
     background: transparent;
@@ -56,9 +52,10 @@
 
 .formInput::placeholder{
     color: white;
+    /* font-size: 18px; */
 }
 
-formInput:focus{
+.formInput:focus{
     outline: none;
 }
 
@@ -76,7 +73,6 @@ outline: none;
 .AddBtn{
     padding: 5px;
     border: 0px;
-    font-size: 20px;
     color: white;
     border: 2px solid white;
     background: transparent;

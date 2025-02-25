@@ -41,15 +41,25 @@ function Home({ userDetails }) {
       acc[dream.dreamEmotion] = (acc[dream.dreamEmotion] || 0) + 1;
       return acc;
     }, {});
-
+    
     data = [["Category", "Count"], ...Object.entries(emotionCounts)];
+  }
+  let allData = [["Category", "Count"]];
+  if (allDreams && allDreams != []) {
+    // creating data for graph
+    const allEmotionCounts = allDreams.reduce((acc, dream) => {
+      acc[dream.dreamEmotion] = (acc[dream.dreamEmotion] || 0) + 1;
+      return acc;
+    }, {});
+
+    allData = [["Category", "Count"], ...Object.entries(allEmotionCounts)];
   }
 
   return (
     <div>
-      <h2 className={styles.header}>
+      <h3 className={styles.header}>
         Dream Journal Insights: Analyze & Uncover Patterns in Your Dreams
-      </h2>
+      </h3>
       <div className={styles.graphContainer}>
         <Chart
           chartType="PieChart"
@@ -62,8 +72,8 @@ function Home({ userDetails }) {
           </div>}
         />
         <Chart
-          chartType="ColumnChart"
-          data={processDreamData(allDreams)}
+          chartType="PieChart"
+          data={allData}
           options={{ title: "Global User Insights" }}
           width={"100%"}
           height={"400px"}
