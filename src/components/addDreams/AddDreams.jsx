@@ -6,7 +6,6 @@ function AddDreams({ userDetails }) {
     dreamTitle: "",
     dreamDesc: "",
     dreamEmotion: "",
-    dreamDate: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -83,14 +82,6 @@ function AddDreams({ userDetails }) {
           placeholder="Dream Description"
           required
           value={formData.dreamDesc}
-        />
-        <input
-          name="dreamDate"
-          value={formData.dreamDate}
-          required
-          onChange={handleChange}
-          className={styles.formInput}
-          type="date"
         />
         <select
           className={styles.formInput}
