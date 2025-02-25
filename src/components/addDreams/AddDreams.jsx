@@ -84,6 +84,7 @@ function AddDreams({ userDetails }) {
           value={formData.dreamDesc}
         />
         <select
+          required
           className={styles.formInput}
           name="dreamEmotion"
           onChange={handleChange}
