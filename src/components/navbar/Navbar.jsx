@@ -12,6 +12,7 @@ const navLinks = [
   { to: "/", title: "HOME" },
   { to: "displayDreams", title: "DISPLAY DREAMS" },
   { to: "addDreams", title: "ADD DREAMS" },
+  { to: "userProfile", title: "MY PROFILE" },
 ];
 
 function Navbar() {

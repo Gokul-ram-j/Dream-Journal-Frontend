@@ -4,7 +4,7 @@ import styles from "./home.module.css";
 import { fetchAllDreams } from "../commonFunction/fetchAllUserDreams";
 function Home({ userDetails }) {
   const [userInfo, setUserInfo] = useState({
-    userEmail: "",
+    userName: "",
     userDetail: {},
   });
   const [dreamsData, setDreamsData] = useState([]);
@@ -24,7 +24,7 @@ function Home({ userDetails }) {
             }
           );
           const data = await response.json();
-          setUserInfo({userEmail:data.userName,userDetail:{...data.userDetail}});
+          setUserInfo({userName:data.userName,userDetail:{...data.userDetail}});
           setDreamsData(data.dreams)
         } catch (error) {
           console.error("Error fetching dreams:", error);
@@ -75,7 +75,7 @@ function Home({ userDetails }) {
         Dream Journal Insights: Analyze & Uncover Patterns in Your Dreams
       </h3>
 
-      <h1 className={styles.greetHeader}>hello {userInfo.userEmail}</h1>
+      <h3 className={styles.greetHeader}>hello {userInfo.userName}</h3>
       <div className={styles.graphContainer}>
         <Chart
           chartType="PieChart"
@@ -98,7 +98,6 @@ function Home({ userDetails }) {
           loader={<h1>loading..</h1>}
         />
       </div>
-      <button onClick={()=>console.log(userInfo)}>click</button>
     </div>
   );
 }

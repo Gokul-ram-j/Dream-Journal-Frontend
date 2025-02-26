@@ -3,7 +3,7 @@
 .navContainer{
   width: 100vw;
   height: 50px;
-  padding: 5px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -46,6 +46,7 @@
     background-color: transparent;
   }
   .showMenu{
+    padding: 10px;
     display: flex;
     width: 95vw;
     min-height: 150px;

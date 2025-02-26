@@ -10,6 +10,7 @@ import AddDreams from "./components/addDreams/AddDreams";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 import Navbar from "./components/navbar/Navbar";
 import './App.css'
+import UserProfile from "./components/userProfile/UserProfile";
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -41,6 +42,10 @@ function App() {
             <Route
               path="addDreams"
               element={<AddDreams userDetails={currentUser} />}
+            />
+            <Route
+              path="userProfile"
+              element={<UserProfile userDetails={currentUser}/>}
             />
           </>
         )}
