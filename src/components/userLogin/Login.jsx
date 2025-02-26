@@ -45,12 +45,22 @@ function Login() {
 
       // Send request to backend after successful signup
       await fetch(
-        `https://dream-journal-backend.vercel.app/userDreamsDB/addUser?userEmail=${encodeURIComponent(email)}&userName=${userName}`,
+        `https://dream-journal-backend.vercel.app/userDreamsDB/addUser`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            userEmail: email,
+            userName: userName,
+            userDetail: {
+              age: null,
+              phoneNumber:"N/A",
+              address: "N/A",
+            }
+          })
+          
         }
       );
 

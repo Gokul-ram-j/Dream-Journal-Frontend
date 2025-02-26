@@ -3,6 +3,10 @@
     margin: 10px auto;
     font-weight: bold;
 }
+.greetHeader{
+    margin: 5px 0px;
+    font-weight: bold;
+}
 
 .graphContainer{
     display: grid;

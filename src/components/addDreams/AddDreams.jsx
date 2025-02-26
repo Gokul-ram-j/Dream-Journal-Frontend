@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./AddDreams.module.css";
 import { Typewriter } from "react-simple-typewriter";
+
 function AddDreams({ userDetails }) {
   const [formData, setFormData] = useState({
     dreamTitle: "",
@@ -9,6 +10,8 @@ function AddDreams({ userDetails }) {
   });
 
   const [loading, setLoading] = useState(false);
+  const [analysing, setAnalysing] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData((data) => ({
@@ -19,11 +22,14 @@ function AddDreams({ userDetails }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await getAnalysis(formData.dreamDesc);
     console.log("Form Data:", formData);
     // Convert formData to a JSON string and encode it
-    const dreamDataString = encodeURIComponent(JSON.stringify(formData));
+    const dreamDataString = encodeURIComponent(JSON.stringify({ ...formData }));
 
     const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
+    // for testing
+    // const url = `http://localhost:8000/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
     try {
       setLoading(true);
       await fetch(url, {
@@ -109,8 +115,16 @@ function AddDreams({ userDetails }) {
           <option value="lucid-excitement">Lucid Excitement</option>
         </select>
 
-        <button disabled={loading} className={styles.AddBtn} type="submit">
-          {loading ? "Submitting.." : "Add Dream"}
+        <button
+          disabled={loading && analysing}
+          className={styles.AddBtn}
+          type="submit"
+        >
+          {loading && analysing
+            ? analysing
+              ? "Analysing"
+              : "Submitting.."
+            : "Add Dream"}
         </button>
       </form>
     </div>
