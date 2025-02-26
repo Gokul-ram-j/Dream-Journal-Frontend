@@ -16,7 +16,6 @@ function UserProfile({ userDetails }) {
     userEmail: "",
     userDetail: { age: "", phoneNumber: "", address: "" },
     userName: "",
-    objID: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({ ...userInfo });
@@ -34,14 +33,12 @@ function UserProfile({ userDetails }) {
             }
           );
           const data = await response.json();
-          console.log('data chk',data.userDetail._id)
           setUserInfo({
             userName: data.userName || "",
             userDetail: {
               age: data.userDetail?.age || "",
               phoneNumber: data.userDetail?.phoneNumber || "",
               address: data.userDetail?.address || "",
-              objID: data.userDetail._id,
             },
           });
           setFormData({
@@ -73,26 +70,26 @@ function UserProfile({ userDetails }) {
   };
 
   const handleSave = async () => {
-    await fetch(
-      "https://dream-journal-backend.vercel.app/userDreamsDB/editUserDetail",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          age: formData.userDetail.age,
-          phoneNumber: formData.userDetail.phoneNumber,
-          address: formData.userDetail.address,
-          email:userDetails.email,
-          check:'check msg',
-          objID:formData.objID
-        }),
-      }
-    ).catch(err=>console.log(err));
-    console.log("Updated Details:", formData);
-    setUserInfo(formData);
-    setIsEditing(false);
+    setLoading(true);
+    await fetch("http://localhost:8000/userDreamsDB/editUserDetail", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        age: formData.userDetail.age,
+        phoneNumber: formData.userDetail.phoneNumber,
+        address: formData.userDetail.address,
+        email: userDetails.email,
+        userName: formData.userName,
+      }),
+    })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setUserInfo(formData);
+        setIsEditing(false);
+        setLoading(false);
+      });
   };
 
   const handleCancel = () => {
@@ -101,90 +98,99 @@ function UserProfile({ userDetails }) {
   };
 
   return (
-    <div className={styles.profileContainer}>
-      <h1 className={styles.title}>My Profile</h1>
-      <div className={styles.profileCard}>
-        <p>
-          <FontAwesomeIcon icon={faUser} className={styles.icon} />
-          {isEditing ? (
-            <input
-              required
-              type="text"
-              name="userName"
-              value={formData.userName}
-              onChange={handleInputChange}
-              className={styles.input}
-            />
-          ) : (
-            <span>Name: {userInfo.userName}</span>
-          )}
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faBirthdayCake} className={styles.icon} />
-          {isEditing ? (
-            <input
-              required
-              type="number"
-              name="age"
-              value={formData.userDetail.age}
-              onChange={handleInputChange}
-              className={styles.input}
-            />
-          ) : (
-            <span>
-              Age:{" "}
-              {userInfo.userDetail.age !== "" ? userInfo.userDetail.age : "N/A"}
-            </span>
-          )}
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPhone} className={styles.icon} />
-          {isEditing ? (
-            <input
-              required
-              type="text"
-              name="phoneNumber"
-              value={formData.userDetail.phoneNumber}
-              onChange={handleInputChange}
-              className={styles.input}
-            />
-          ) : (
-            <span>Phone Number: {userInfo.userDetail.phoneNumber}</span>
-          )}
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.icon} />
-          {isEditing ? (
-            <input
-              required
-              type="text"
-              name="address"
-              value={formData.userDetail.address}
-              onChange={handleInputChange}
-              className={styles.input}
-            />
-          ) : (
-            <span>Address: {userInfo.userDetail.address}</span>
-          )}
-        </p>
-      </div>
-      {isEditing ? (
-        <div className={styles.buttonGroup}>
-          <button className={styles.saveButton} onClick={handleSave}>
-            <FontAwesomeIcon icon={faSave} className={styles.icon} /> Save
-          </button>
-          <button className={styles.cancelButton} onClick={handleCancel}>
-            <FontAwesomeIcon icon={faTimes} className={styles.icon} /> Cancel
-          </button>
+    <div className={styles.container}>
+      <div className={styles.profileContainer}>
+        <h1 className={styles.title}>My Profile</h1>
+        <div className={styles.profileCard}>
+          <p>
+            <FontAwesomeIcon icon={faUser} className={styles.icon} />
+            {isEditing ? (
+              <input
+                required
+                type="text"
+                name="userName"
+                value={formData.userName}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            ) : (
+              <span>Name: {userInfo.userName}</span>
+            )}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faBirthdayCake} className={styles.icon} />
+            {isEditing ? (
+              <input
+                required
+                type="number"
+                name="age"
+                value={formData.userDetail.age}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            ) : (
+              <span>
+                Age:{" "}
+                {userInfo.userDetail.age !== ""
+                  ? userInfo.userDetail.age
+                  : "N/A"}
+              </span>
+            )}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faPhone} className={styles.icon} />
+            {isEditing ? (
+              <input
+                required
+                type="text"
+                name="phoneNumber"
+                value={formData.userDetail.phoneNumber}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            ) : (
+              <span>Phone Number: {userInfo.userDetail.phoneNumber}</span>
+            )}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.icon} />
+            {isEditing ? (
+              <input
+                required
+                type="text"
+                name="address"
+                value={formData.userDetail.address}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            ) : (
+              <span>Address: {userInfo.userDetail.address}</span>
+            )}
+          </p>
         </div>
-      ) : (
-        <button
-          className={styles.editButton}
-          onClick={() => setIsEditing(true)}
-        >
-          <FontAwesomeIcon icon={faEdit} className={styles.icon} /> Edit
-        </button>
-      )}
+        {isEditing ? (
+          <div className={styles.buttonGroup}>
+            <button
+              className={styles.saveButton}
+              onClick={handleSave}
+              disabled={loading}
+            >
+              <FontAwesomeIcon icon={faSave} className={styles.btnIcon} />{" "}
+              {loading ? "Saving.." : "Save"}
+            </button>
+            <button className={styles.cancelButton} onClick={handleCancel}>
+              <FontAwesomeIcon icon={faTimes} className={styles.btnIcon} /> Cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            className={styles.editButton}
+            onClick={() => setIsEditing(true)}
+          >
+            <FontAwesomeIcon icon={faEdit} className={styles.btnIcon} /> Edit
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,13 @@
+.container{
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .profileContainer {
+  min-width: 300px;
   max-width: 500px;
   margin: auto;
   padding: 20px;
@@ -36,7 +45,12 @@
 
 .icon {
   margin-right: 10px;
-  color: #ffffff;
+  color: #6889f7;
+  font-size: 18px;
+}
+.btnIcon {
+  margin-right: 10px;
+  color: #fefefe;
   font-size: 18px;
 }
 

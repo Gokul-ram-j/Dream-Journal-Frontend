@@ -22,7 +22,6 @@ function AddDreams({ userDetails }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await getAnalysis(formData.dreamDesc);
     console.log("Form Data:", formData);
     // Convert formData to a JSON string and encode it
     const dreamDataString = encodeURIComponent(JSON.stringify({ ...formData }));
