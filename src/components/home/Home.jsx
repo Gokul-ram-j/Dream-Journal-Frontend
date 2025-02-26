@@ -2,35 +2,49 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import styles from "./home.module.css";
 import { fetchAllDreams } from "../commonFunction/fetchAllUserDreams";
-import { fetchUserData } from "../commonFunction/fetchUserDetails";
 function Home({ userDetails }) {
-  const [userDetail,setUserDetail]=useState({})
+  const [userInfo, setUserInfo] = useState({
+    userEmail: "",
+    userDetail: {},
+  });
   const [dreamsData, setDreamsData] = useState([]);
   const [allDreams, setAllDreams] = useState([]);
   // fetching user dreams data
+
   useEffect(() => {
-    const getUserDetail = async () => {
-      if (userDetails?.email) {
+    const  getUserInfo=async()=>  {
+      if (userDetails.email) {
         try {
-          const userDataResponse = await fetchUserData(userDetails.email);
-          setUserDetail(userDataResponse.userData)
-          setDreamsData(userDataResponse.userData.dreams)
+          const response = await fetch(
+            `https://dream-journal-backend.vercel.app/userDreamsDB/userDetails?userEmail=${userDetails.email}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await response.json();
+          setUserInfo({userEmail:data.userName,userDetail:{...data.userDetail}});
+          setDreamsData(data.dreams)
         } catch (error) {
           console.error("Error fetching dreams:", error);
+          return [];
         }
       }
-    };
 
+    };
+    getUserInfo();
+  }, []);
+  useEffect(() => {
     const getAllDreams = async () => {
       try {
         console.log("inside fetch all");
-        const allDreamsData = await fetchAllDreams(); 
+        const allDreamsData = await fetchAllDreams();
         setAllDreams(allDreamsData || []);
       } catch (error) {
         console.error("Error fetching all dreams:", error);
       }
     };
-    getUserDetail();
     getAllDreams();
   }, [userDetails]);
 
@@ -61,7 +75,7 @@ function Home({ userDetails }) {
         Dream Journal Insights: Analyze & Uncover Patterns in Your Dreams
       </h3>
 
-      <h1 className={styles.greetHeader}>hello {userDetail.userName}</h1>
+      <h1 className={styles.greetHeader}>hello {userInfo.userEmail}</h1>
       <div className={styles.graphContainer}>
         <Chart
           chartType="PieChart"
@@ -84,6 +98,7 @@ function Home({ userDetails }) {
           loader={<h1>loading..</h1>}
         />
       </div>
+      <button onClick={()=>console.log(userInfo)}>click</button>
     </div>
   );
 }

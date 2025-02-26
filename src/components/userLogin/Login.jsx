@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 // fontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLock,faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 // firebase
 import {
   signInWithEmailAndPassword,
@@ -22,12 +22,13 @@ function Login() {
     setLoading(true);
     await signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        setLoading(false);
+        console.log('Account created successfully')
       })
       .catch(() => {
-        setLoading(false);
         setError(true);
-      });
+      }).finally(()=>{
+        setLoading(false)
+      })
   };
 
   useEffect(() => {
@@ -37,12 +38,6 @@ function Login() {
   const handleSignUpSubmit = async () => {
     setLoading(true);
     try {
-       await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
       // Send request to backend after successful signup
       await fetch(
         `https://dream-journal-backend.vercel.app/userDreamsDB/addUser`,
@@ -56,13 +51,18 @@ function Login() {
             userName: userName,
             userDetail: {
               age: null,
-              phoneNumber:"N/A",
+              phoneNumber: "N/A",
               address: "N/A",
-            }
-          })
-          
+            },
+          }),
         }
-      );
+      )
+        .then(async () => {
+          await createUserWithEmailAndPassword(auth, email, password);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       setLoading(false);
       setIsLogin(true);
@@ -86,7 +86,9 @@ function Login() {
       {loading && <Loading />}
       {!loading && (
         <div className={styles.container}>
-          <h1 className={styles.title}>Welcome <br /> to <br /> Dream Journal</h1>
+          <h1 className={styles.title}>
+            Welcome <br /> to <br /> Dream Journal
+          </h1>
           <form className={styles.form} onSubmit={handleSubmit}>
             <h1 className={styles.formTitle}>
               {isLogin ? "Login" : "Sign in"}
@@ -96,20 +98,22 @@ function Login() {
                 Gmail and Password Is not Matching
               </div>
             )}
-            {!isLogin &&<div className={styles.inpWrapper}>
-              <FontAwesomeIcon
-                style={{ width: "16px", height: "16px" }}
-                icon={faUser}
-              />
-              <input
-                className={styles.formInput}
-                type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                required
-                placeholder="Name"
-              />
-            </div>}
+            {!isLogin && (
+              <div className={styles.inpWrapper}>
+                <FontAwesomeIcon
+                  style={{ width: "16px", height: "16px" }}
+                  icon={faUser}
+                />
+                <input
+                  className={styles.formInput}
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                  placeholder="Name"
+                />
+              </div>
+            )}
             <div className={styles.inpWrapper}>
               <FontAwesomeIcon
                 style={{ width: "16px", height: "16px" }}
