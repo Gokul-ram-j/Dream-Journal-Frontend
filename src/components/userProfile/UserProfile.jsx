@@ -185,7 +185,6 @@ function UserProfile({ userDetails }) {
           <FontAwesomeIcon icon={faEdit} className={styles.icon} /> Edit
         </button>
       )}
-      <button onClick={() => console.log(userInfo)}>click</button>
     </div>
   );
 }
