@@ -71,7 +71,7 @@ function UserProfile({ userDetails }) {
 
   const handleSave = async () => {
     setLoading(true);
-    await fetch("http://localhost:8000/userDreamsDB/editUserDetail", {
+    await fetch("https://dream-journal-backend.vercel.app/userDreamsDB/editUserDetail", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

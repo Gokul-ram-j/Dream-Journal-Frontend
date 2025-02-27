@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faSignOut,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSignOut, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "../auth/firebase";
 const navLinks = [
@@ -29,11 +26,15 @@ function Navbar() {
   };
   return (
     <div className={styles.navContainer}>
-      <div className={`${isOpen?styles.showMenu:{display:"none"}} ${styles.navLinks}`}>
+      <div
+        className={`${isOpen ? styles.showMenu : { display: "none" }} ${
+          styles.navLinks
+        }`}
+      >
         {navLinks.map((info, index) => {
           return (
             <Link
-            onClick={()=>setIsOpen(false)}
+              onClick={() => setIsOpen(false)}
               key={index}
               style={{ textDecoration: "none", fontSize: "20px" }}
               to={info.to}
@@ -50,15 +51,22 @@ function Navbar() {
       <button
         className={styles.menuIcon}
         onClick={() => {
-          console.log("clicked");
           setIsOpen(!isOpen);
         }}
       >
-        <FontAwesomeIcon
-          style={{ width: "25px", height: "25px" }}
-          size={100}
-          icon={faBars}
-        />
+        {isOpen ? (
+          <FontAwesomeIcon
+            style={{ width: "25px", height: "25px" }}
+            size={100}
+            icon={faXmark}
+          />
+        ) : (
+          <FontAwesomeIcon
+            style={{ width: "25px", height: "25px" }}
+            size={100}
+            icon={faBars}
+          />
+        )}
       </button>
     </div>
   );
