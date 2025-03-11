@@ -12,7 +12,6 @@ function AddDreams({ userDetails }) {
   const [loading, setLoading] = useState(false);
   const [analysing, setAnalysing] = useState(false);
 
-
   const handleChange = (e) => {
     setFormData((data) => ({
       ...data, // Keep existing form data
@@ -20,11 +19,47 @@ function AddDreams({ userDetails }) {
     }));
   };
 
+  const getAnalysis = async (dreamDesc) => {
+    setLoading(false);
+    setAnalysing(true);
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer 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`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: `Give a dream analysis for the given dream description ${dreamDesc}`,
+            },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content || "No Analysis ";
+    } catch (error) {
+      console.error("Error fetching response:", error);
+    } finally {
+      setAnalysing(false);
+      setLoading(true);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
     // Convert formData to a JSON string and encode it
-    const dreamDataString = encodeURIComponent(JSON.stringify({ ...formData }));
+    const dreamDataString = encodeURIComponent(
+      JSON.stringify({
+        ...formData,
+        dreamAnalysis: await getAnalysis(formData.dreamDesc),
+      })
+    );
 
     const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
     // for testing
@@ -45,6 +80,11 @@ function AddDreams({ userDetails }) {
       console.error("Error submitting form:", error);
     } finally {
       setLoading(false);
+      setFormData({
+        dreamTitle: "",
+        dreamDesc: "",
+        dreamEmotion: "",
+      })
     }
   };
 
@@ -115,13 +155,13 @@ function AddDreams({ userDetails }) {
         </select>
 
         <button
-          disabled={loading && analysing}
+          disabled={loading || analysing}
           className={styles.AddBtn}
           type="submit"
         >
-          {loading && analysing
+          {loading || analysing
             ? analysing
-              ? "Analysing"
+              ? "Analysing.."
               : "Submitting.."
             : "Add Dream"}
         </button>

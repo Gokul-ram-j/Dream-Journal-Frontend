@@ -8,8 +8,9 @@ import {
   faSave,
   faTimes,
   faTrash,
+  faChartBar,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-
 function DisplayDreams({ userDetails }) {
   const [dreams, setDreams] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -67,9 +68,11 @@ const DreamsContainer = ({
   setLoading,
 }) => {
   const [editing, setEditing] = useState(false);
+  const [showAnalysis, setShowAnalysis] = useState(false);
   const [title, setTitle] = useState(data.dreamTitle);
   const [category, setCategory] = useState(data.dreamEmotion);
   const [description, setDescription] = useState(data.dreamDesc);
+  const [analysis, setAnalysis] = useState(data.dreamAnalysis);
 
   // getting date of creation of the post
   const date = new Date(data.dateLogged);
@@ -92,17 +95,44 @@ const DreamsContainer = ({
     setDescription(data.dreamDesc);
   };
 
+  const getAnalysis = async (dreamDesc) => {
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer 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`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "user",
+              content: `Give a dream analysis for the given dream description ${dreamDesc}`,
+            },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content || "No Analysis";
+    } catch (error) {
+      console.error("Error fetching response:", error);
+    }
+  };
+
   // handleSaveEditing
   const handleSaveEditing = async () => {
     setEditing(false);
     setLoading(true);
+    const updatedDreamDescAnalysis = await getAnalysis(description);
     const updatedDreamData = {
       title: title,
       category: category,
       description: description,
+      analysis: updatedDreamDescAnalysis,
     };
-    console.log(title, category);
-    console.log(description);
+    setAnalysis(updatedDreamDescAnalysis);
 
     try {
       const response = await fetch(
@@ -135,6 +165,7 @@ const DreamsContainer = ({
                 dreamTitle: title,
                 dreamEmotion: category,
                 dreamDesc: description,
+                analysis: analysis,
               }
             : dream
         )
@@ -228,26 +259,69 @@ const DreamsContainer = ({
         </>
       ) : (
         <>
-          <h1 className={styles.dreamTitle}>{title}</h1>
-          <p className={styles.dreamCategory}>Category: {category}</p>
-          <p className={styles.dreamDesc}>{description}</p>
+          {showAnalysis ? (
+            <>
+              <h2>{title}</h2>
+              <p className={styles.dreamAnalysis}>{analysis}</p>
+            </>
+          ) : (
+            <>
+              <h1 className={styles.dreamTitle}>{title}</h1>
+              <p className={styles.dreamCategory}>Category: {category}</p>
+              <p className={styles.dreamDesc}>{description}</p>
+            </>
+          )}
         </>
       )}
 
       <div className={styles.buttonContainer}>
         {!editing ? (
           <>
-            <button
-              onClick={() => setEditing(true)}
-              className={styles.editButton}
-            >
-              <FontAwesomeIcon icon={faEdit} style={{ marginRight: "5px" }} />
-              EDIT
-            </button>
-            <button onClick={handleDeleteDream} className={styles.deleteButton}>
-              <FontAwesomeIcon icon={faTrash} style={{ marginRight: "5px" }} />
-              DELETE
-            </button>
+            {!showAnalysis ? (
+              <>
+                <button
+                  onClick={() => setEditing(true)}
+                  className={styles.editButton}
+                >
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    style={{ marginRight: "5px" }}
+                  />
+                  EDIT
+                </button>
+                <button
+                  onClick={handleDeleteDream}
+                  className={styles.deleteButton}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    style={{ marginRight: "5px" }}
+                  />
+                  DELETE
+                </button>
+                <button
+                  onClick={() => setShowAnalysis(true)}
+                  className={styles.analysisButton}
+                >
+                  <FontAwesomeIcon
+                    icon={faChartBar}
+                    style={{ marginRight: "5px" }}
+                  />
+                  SHOW ANALYSIS
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setShowAnalysis(false)}
+                className={styles.analysisButton}
+              >
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  style={{ marginRight: "5px" }}
+                />
+                HIDE ANALYSIS
+              </button>
+            )}
           </>
         ) : (
           <>

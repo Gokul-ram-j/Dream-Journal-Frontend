@@ -3,10 +3,6 @@
     margin: 10px auto;
     font-weight: bold;
 }
-.greetHeader{
-    margin: 5px 0px;
-    font-weight: bold;
-}
 
 .graphContainer{
     display: grid;
@@ -17,7 +13,7 @@
 
 
 /* mobile view */
-@media (max-width: 768px) { 
+@media (max-width: 800px) { 
     .graphContainer {
         grid-template-columns: 100%;
         box-sizing: border-box;

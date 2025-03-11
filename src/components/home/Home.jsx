@@ -75,7 +75,6 @@ function Home({ userDetails }) {
         Dream Journal Insights: Analyze & Uncover Patterns in Your Dreams
       </h3>
 
-      <h3 className={styles.greetHeader}>hello {userInfo.userName}</h3>
       <div className={styles.graphContainer}>
         <Chart
           chartType="PieChart"
