@@ -19,34 +19,42 @@ function AddDreams({ userDetails }) {
     }));
   };
 
+  // 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
+
   const getAnalysis = async (dreamDesc) => {
-    setLoading(false);
+    setLoading(true);
     setAnalysing(true);
+
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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`, // Replace with your actual API key
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
+          model: "openai/gpt-3.5-turbo-0613",
           messages: [
             {
               role: "user",
-              content: `Give a dream analysis for the given dream description ${dreamDesc}`,
+              content: `Give a dream analysis for the given dream description: ${dreamDesc}`,
             },
           ],
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status} ${res.statusText}`);
+      }
+
       const data = await res.json();
-      return data.choices?.[0]?.message?.content || "No Analysis ";
+      return data.choices[0].message.content;
     } catch (error) {
-      console.error("Error fetching response:", error);
+      console.error("Error fetching dream analysis:", error);
+      return "Failed to fetch dream analysis. Please try again later.";
     } finally {
+      setLoading(false);
       setAnalysing(false);
-      setLoading(true);
     }
   };
 
@@ -84,7 +92,7 @@ function AddDreams({ userDetails }) {
         dreamTitle: "",
         dreamDesc: "",
         dreamEmotion: "",
-      })
+      });
     }
   };
 

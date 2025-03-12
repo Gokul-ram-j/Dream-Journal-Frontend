@@ -96,28 +96,37 @@ const DreamsContainer = ({
   };
 
   const getAnalysis = async (dreamDesc) => {
+    setLoading(true);
+
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer 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`, // Replace with your actual API key
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
+          model: "openai/gpt-3.5-turbo-0613",
           messages: [
             {
               role: "user",
-              content: `Give a dream analysis for the given dream description ${dreamDesc}`,
+              content: `Give a dream analysis for the given dream description: ${dreamDesc}`,
             },
           ],
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status} ${res.statusText}`);
+      }
+
       const data = await res.json();
-      return data.choices?.[0]?.message?.content || "No Analysis";
+      return data.choices[0].message.content;
     } catch (error) {
-      console.error("Error fetching response:", error);
+      console.error("Error fetching dream analysis:", error);
+      return "Failed to fetch dream analysis. Please try again later.";
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,16 +134,20 @@ const DreamsContainer = ({
   const handleSaveEditing = async () => {
     setEditing(false);
     setLoading(true);
-    const updatedDreamDescAnalysis = await getAnalysis(description);
-    const updatedDreamData = {
-      title: title,
-      category: category,
-      description: description,
-      analysis: updatedDreamDescAnalysis,
-    };
-    setAnalysis(updatedDreamDescAnalysis);
-
+  
     try {
+      // Step 1: Fetch new analysis
+      const updatedDreamDescAnalysis = await getAnalysis(description);
+  
+      // Step 2: Create the updated dream object with the new analysis
+      const updatedDreamData = {
+        title: title,
+        category: category,
+        description: description,
+        analysis: updatedDreamDescAnalysis,
+      };
+  
+      // Step 3: Send PUT request to save the dream
       const response = await fetch(
         `https://dream-journal-backend.vercel.app/userDreamsDB/editUserDream`,
         {
@@ -148,15 +161,16 @@ const DreamsContainer = ({
             updatedData: updatedDreamData,
           }),
         }
-      ).catch((err) => console.log(err));
-      const result = await response.json();
-      console.log(result);
-
+      );
+  
       if (!response.ok) {
         throw new Error("Failed to update dream data");
       }
-
-      // Directly update the state with the new dream data
+  
+      const result = await response.json();
+      console.log(result);
+  
+      // Step 4: Update the dreams state with the new data (including the updated analysis)
       setDreams((prevDreams) =>
         prevDreams.map((dream) =>
           dream._id === data._id
@@ -165,24 +179,23 @@ const DreamsContainer = ({
                 dreamTitle: title,
                 dreamEmotion: category,
                 dreamDesc: description,
-                analysis: analysis,
+                analysis: updatedDreamDescAnalysis,  // Updated analysis here
               }
             : dream
         )
       );
-
+  
       console.log("Dream updated successfully:", result);
     } catch (error) {
       console.error("Error updating dream:", error);
     } finally {
-      console.log(title, category);
-      console.log(description);
+      setLoading(false);
       setTitle(title);
       setCategory(category);
       setDescription(description);
-      setLoading(false);
     }
   };
+  
 
   // delete userDream
 
