@@ -29,7 +29,7 @@ function AddDreams({ userDetails }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`, // Replace with your actual API key
+          Authorization: `Bearer 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`, // Replace with your actual API key
         },
         body: JSON.stringify({
           model: "openai/gpt-3.5-turbo-0613",
