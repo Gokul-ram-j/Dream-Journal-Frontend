@@ -29,7 +29,7 @@ function AddDreams({ userDetails }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`, // Replace with your actual API key
+          Authorization: `Bearer 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`, // Replace with your actual API key
         },
         body: JSON.stringify({
           model: "openai/gpt-3.5-turbo-0613",
@@ -68,9 +68,9 @@ function AddDreams({ userDetails }) {
       })
     );
 
-    const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
+    // const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
     // for testing
-    // const url = `http://localhost:8000/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
+    const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
     try {
       setLoading(true);
       await fetch(url, {
