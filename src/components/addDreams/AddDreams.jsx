@@ -24,12 +24,13 @@ function AddDreams({ userDetails }) {
   const getAnalysis = async (dreamDesc) => {
     setLoading(true);
     setAnalysing(true);
+
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`, // Replace with your actual API key
+          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`, // Replace with your actual API key
         },
         body: JSON.stringify({
           model: "openai/gpt-3.5-turbo-0613",
@@ -52,10 +53,11 @@ function AddDreams({ userDetails }) {
       console.error("Error fetching dream analysis:", error);
       return "Failed to fetch dream analysis. Please try again later.";
     } finally {
-      setLoading(false);
+      setLoading(true);
       setAnalysing(false);
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +92,6 @@ function AddDreams({ userDetails }) {
       setFormData({
         dreamTitle: "",
         dreamDesc: "",
-        dreamEmotion: "",
       });
     }
   };
