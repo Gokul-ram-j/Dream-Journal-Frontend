@@ -99,7 +99,7 @@ const DreamsContainer = ({
     setLoading(true);
   
     try {
-      const res = await fetch("http://localhost:5000/userDreamsDB/analyze-dream", {
+      const res = await fetch("https://dream-journal-backend.vercel.app/userDreamsDB/analyze-dream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dreamDesc }),
