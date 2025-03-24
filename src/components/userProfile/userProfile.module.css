@@ -1,8 +1,9 @@
 .container{
   width: 100vw;
-  height: 80vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  background: linear-gradient(to right, #f0f2f5, #dfe7fd);
   align-items: center;
 }
 

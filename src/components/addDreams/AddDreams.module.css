@@ -1,88 +1,81 @@
-*{
-    padding: 0%;
-    margin: 0%;
-}
-
-.container{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .container {
     width: 100vw;
-    height: 100vh;
-    gap: 15px;
-    background: rgb(0, 0, 0,0.436);
-    background-image: url('../../assets/night.jpg');
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    background-image: url("../../assets/night.jpg");
     background-size: contain;
-    background-repeat: repeat;
     background-position: center;
-    padding-top: 25px ;
-}
-
-.header {
+    background-repeat: repeat;
+  }
+  
+  .header {
     text-align: center;
     color: white;
     backdrop-filter: blur(3px);
-    margin: auto;
-    width: fit-content;
-    
-}
-
-
-.dreamForm{
-    height: 300px;
-    width: 80vw;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .dreamForm {
+    width: 90%;
     max-width: 500px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    box-shadow: 2px 2px 4px  rgba(0, 0, 0, 0.355),-2px -2px 4px  rgba(0, 0, 0, 0.355);
-    padding: 15px;
-    backdrop-filter: blur(3px);
-    margin: auto;
-}
-
-.formInput{
-    padding: 15px;
-    box-sizing: border-box;
-    resize: vertical;
-    background: transparent;
-    border: 0px;
+    gap: 15px;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 10px;
+    border: none;
     border-bottom: 2px solid white;
-    scrollbar-width: none;
-    color:white;
-}
-
-.formInput::placeholder{
+    background: transparent;
     color: white;
-    /* font-size: 18px; */
-}
-
-.formInput:focus{
-    outline: none;
-}
-
-select.formInput{
-    
-    border: 1px solid white;
-}
-
-select.formInput>option{
+    font-size: 16px;
+  }
+  .formInput option{
     color: black;
-}
-select.formInput:focus{
-outline: none;
-}
-.AddBtn{
-    padding: 5px;
-    border: 0px;
-    color: white;
+  }
+  
+  .formInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .formInput:focus {
+    outline: none;
+  }
+  
+  .AddBtn {
+    padding: 10px;
     border: 2px solid white;
     background: transparent;
-    font-weight: bold;
-}
-
-.AddBtn:hover{
-    background-color: rgba(255, 255, 255, 0.153);
-    border: 2px solid white;
     color: white;
     font-weight: bold;
-
-}
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .AddBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  @media (max-width: 600px) {
+    .dreamForm {
+      width: 95%;
+    }
+  }
+  
