@@ -47,14 +47,20 @@ function Home({ userDetails }) {
   }, []);
 
   const processData = (dreams) => {
+    if (!dreams || dreams.length === 0) {
+      return [["Category", "Count"], ["No Data", 0]];
+    }
     const emotionCounts = dreams.reduce((acc, dream) => {
       acc[dream.dreamEmotion] = (acc[dream.dreamEmotion] || 0) + 1;
       return acc;
     }, {});
     return [["Category", "Count"], ...Object.entries(emotionCounts)];
   };
-
+  
   const processTimeData = (dreams) => {
+    if (!dreams || dreams.length === 0) {
+      return [["Date", "Dreams Logged"], ["No Data", 0]];
+    }
     const dateCounts = dreams.reduce((acc, dream) => {
       const date = dream.dateLogged.split("T")[0];
       acc[date] = (acc[date] || 0) + 1;
@@ -62,6 +68,8 @@ function Home({ userDetails }) {
     }, {});
     return [["Date", "Dreams Logged"], ...Object.entries(dateCounts)];
   };
+  
+
 
   return (
     <div>
