@@ -34,13 +34,13 @@ function AddDreams({ userDetails = { email: "user@example.com" } }) {
     setAnalysing(true);
 
     try {
-      const analysis = await getAnalysis(formData.dreamDesc);
+      // const analysis = await getAnalysis(formData.dreamDesc);
       setAnalysing(false);
       setLoading(true);
 
       const dreamDataString = encodeURIComponent(
         // JSON.stringify({ ...formData, dreamAnalysis: analysis })
-        JSON.stringify({ ...formData })
+        JSON.stringify({ ...formData, dreamAnalysis: "Unlock AI Dream Analysis by $199/month" }) // Placeholder for analysis
       );
 
       const url = `https://dream-journal-backend.vercel.app/userDreamsDB/addUserDream?userEmail=${userDetails.email}&dreamData=${dreamDataString}`;
